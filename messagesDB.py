@@ -10,10 +10,7 @@ class messagesDB(object):
         self.__dbName = "messages.db"
         con = self.create_connection()
         if con is not None:
-            # c=con.cursor
-            # c.execute("DROP TABLE messages")
-            # c.execute("DROP TABLE participants")
-            # c.execute("DROP TABLE participants_of_messages")
+            
             messages_tbl = 'CREATE TABLE IF NOT EXISTS messages (message_id text PRIMARY KEY,session_id text NOT NULL,' \
                            'application_id integer NOT NULL,content text NOT NULL); '
             participants_tbl = 'CREATE TABLE IF NOT EXISTS participants ( participant_id INTEGER PRIMARY KEY ' \
