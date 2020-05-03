@@ -7,7 +7,6 @@ from messagesDB import messagesDB
 app = Flask(__name__)
 mDB = messagesDB()
 
-
 @app.route('/addMessage', methods=['POST'])
 def add_message():
     try:

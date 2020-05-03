@@ -76,7 +76,6 @@ def test_delete_message_by_application_id_success():
     assert response.status_code == 200
     assert response.json['response'] is not None
 
-
 def test_delete_message_by_session_id_success():
     sId = add_message_for_test(False, True)
     response = app.test_client().delete(
