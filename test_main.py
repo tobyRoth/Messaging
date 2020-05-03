@@ -4,8 +4,6 @@ import json
 import random
 import math
 
-random.random() * 100
-
 def add_message_for_test( application_id=False, session_id=False, message_id=False,rand_message_id=None ):
     if rand_message_id is None:
        rand_message_id= math.floor(random.random() * 100)
@@ -25,7 +23,6 @@ def add_message_for_test( application_id=False, session_id=False, message_id=Fal
         return "sid5"
     if message_id:return rand_message_id
     return response
-
 
 def test_add_message_success():
     response = add_message_for_test()

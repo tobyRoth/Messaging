@@ -2,10 +2,8 @@ import sqlite3
 from sqlite3 import Error
 from message import message
 
-
 class messagesDB(object):
     """description of class"""
-
     def __init__(self):
         self.__dbName = "messages.db"
         con = self.create_connection()
