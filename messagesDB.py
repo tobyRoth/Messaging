@@ -71,6 +71,7 @@ class messagesDB(object):
                                      '           on pm.participant_id=p.participant_id\n'
                                      '           WHERE m.') + key + """=? GROUP BY m.message_id""", [id])
         all_messages_for_key = all_messages_cursor.fetchall()
+        print(all_messages_for_key)
         response = []
         for item in all_messages_for_key:
             message_id = item[2]
@@ -94,24 +95,27 @@ class messagesDB(object):
 
     def delete_messages(self, key, id):
         con = sqlite3.connect(self.__dbName)
-        all_message_cursor = con.cursor()
-        c = con.cursor()
-        all_message_cursor.execute(('SELECT DISTINCT\n'
-                                     '           m.*,pm.*,p.*\n'
-                                     '           FROM messages m join participants_of_messages pm \n'
-                                     '           on m.message_id=pm.message_id \n'
-                                     '           join participants p \n'
-                                     '           on pm.participant_id=p.participant_id\n'
-                                     '           WHERE m.') + key + """=? GROUP BY m.message_id""", [id])
-
-        res = all_message_cursor.fetchone()
+        message_cursor = con.cursor()
+        participants_cursor=con.cursor()
+        message_cursor.execute('''SELECT message_id FROM messages WHERE '''+key+'''=?''', [id])
+        res=message_cursor.fetchone()
         if res is None:
             con.close()
             return  False
         while res:
-            c.execute("DELETE FROM participants WHERE participant_id=?", (res[6],))
-            res = all_message_cursor.fetchone()
-        all_message_cursor.execute("DELETE FROM messages WHERE " + key + "=?", [id])
+          participants_cursor.execute("""SELECT 
+                       p.participant_id,p.name 
+                       FROM messages m join participants_of_messages pm 
+                       on m.message_id=pm.message_id 
+                       join participants p 
+                       on pm.participant_id=p.participant_id
+                       WHERE m.""" + key + """=? AND pm.message_id=?
+                       GROUP BY p.name""", (id, res[0],))
+          participants=participants_cursor.fetchall()
+          for p in participants:
+             message_cursor.execute("DELETE FROM participants WHERE participant_id=?", (p[0],))
+          res=message_cursor.fetchone()
+        message_cursor.execute("DELETE FROM messages WHERE " + key + "=?", [id])
         con.commit()
         con.close()
         return True
