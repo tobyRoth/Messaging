@@ -16,14 +16,14 @@ the best way to use this server is with [postman](https://www.postman.com/)
 ### Get Message:
 ##### To get a message by a requested attribute 
 ##### method - POST , url-'/getMessage'
-### query params one of the following: 
+**query params one of the following:**
 ##### ```application_id : number ``` 
 ##### ```session_id :text ``` 
 ##### ```message_id :text ```
 ### Delete Message:
 ##### To delete a message by a requested attribute 
 ##### method - POST , url-'/deleteMessage'
-### query params one of the following: 
+**query params one of the following:**
 ##### ```application_id : number ``` 
 ##### ```session_id :text ``` 
 ##### ```message_id :text ```
