@@ -1,27 +1,22 @@
-import sqlite3
 from sqlite3 import Error
+
 from flask import Flask, jsonify, request
+
 from messagesDB import messagesDB
 
-# from flask_restful import Resource, Api
-# from flask_restful import Api
-
 app = Flask(__name__)
-# api = Api(app)
 mDB = messagesDB()
 
-
-# class Messaging(Resources):
 
 @app.route('/addMessage', methods=['POST'])
 def add_message():
     try:
-        mId = request.json['message_id']
-        sId = request.json['session_id']
-        aId = request.json['application_id']
-        par = request.json['participants']
+        message_id = request.json['message_id']
+        session_id = request.json['session_id']
+        application_id = request.json['application_id']
+        participants = request.json['participants']
         content = request.json['content']
-        msg_row_id = mDB.create_message(mId, sId, aId, par, content)
+        msg_row_id = mDB.create_message(message_id, session_id, application_id, participants, content)
         response = "added successfully message number:{} ".format(msg_row_id)
         return jsonify({'response': response})
     except Error as er:

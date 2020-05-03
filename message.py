@@ -48,13 +48,6 @@ class message(object):
     def participants(self, participants):
         self.__participants = participants
 
-    def print(self):
-        print("applicationId: ", self.applicationId)
-        print("sessionId: " + self.sessionId, )
-        print("messageId: " + self.messageId)
-        print("content: " + self.content)
-        print("participants: ", self.participants)
-
     def serialize(self):
         m = {
             'applicationId': self.applicationId,
